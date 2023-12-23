@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 char *vigenereEncrypt(const char *plaintext, const char *keyword) {
-    if (plaintext == NULL || keyword == NULL) {
+    if (plaintext == NULL || keyword == NULL || keyword[0] == '\0') {
         return NULL;
     }
 
@@ -17,10 +18,14 @@ char *vigenereEncrypt(const char *plaintext, const char *keyword) {
     }
 
     for (int i = 0; i < plainLen; i++) {
-        int pi = plaintext[i] - 'A';
-        int ki = keyword[i % keyLen] - 'A';
-        char ci = (pi + ki) % 26 + 'A';
-        encrypted[i] = ci;
+        if (isalpha(plaintext[i]) && isalpha(keyword[i % keyLen])) {
+            int pi = toupper(plaintext[i]) - 'A';
+            int ki = toupper(keyword[i % keyLen]) - 'A';
+            char ci = (pi + ki) % 26 + 'A';
+            encrypted[i] = ci;
+        } else {
+            encrypted[i] = plaintext[i];
+        }
     }
     encrypted[plainLen] = '\0';
 

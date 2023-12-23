@@ -8,6 +8,15 @@
 #include "morseCodeEncoding.h"
 #include "urlEncode.h"
 #include "urlDecode.h"
+#include "vigenereEncrypt.h"
+#include "vigenereDecrypt.h"
+#include "XORcipher.h"
+#include "railFence.h"
+#include "randomPass.h"
+#include "romanToDecimal.h"
+#include "decimalToRoman.h"
+#include "binaryToGrayCode.h"
+#include "grayToBinary.h" 
 
 
 GtkBuilder *builder;
@@ -76,6 +85,57 @@ void on_textanalyzer_file_set(){
     free(result);
 }
 
+void on_vignere_encrypt_input_changed(){
+    GtkEntry *vignere_encrypt_input = GTK_ENTRY(gtk_builder_get_object(builder, "vignere_encrypt_text_input"));
+    GtkEntry *vignere_encrypt_key = GTK_ENTRY(gtk_builder_get_object(builder, "vignere_encrypt_key_input"));
+    GtkEntry *vignere_encrypt_output = GTK_ENTRY(gtk_builder_get_object(builder, "vignere_encrypt_output"));
+
+    const char *input_text = gtk_entry_get_text(vignere_encrypt_input);
+    const char *key_text = gtk_entry_get_text(vignere_encrypt_key);
+
+    char *output_text = vigenereEncrypt(input_text, key_text);
+
+    gtk_entry_set_text(vignere_encrypt_output, output_text);
+}
+
+void on_vignere_decrypt_input_changed(){
+    GtkEntry *vignere_decrypt_input = GTK_ENTRY(gtk_builder_get_object(builder, "vignere_decrypt_text_input"));
+    GtkEntry *vignere_decrypt_key = GTK_ENTRY(gtk_builder_get_object(builder, "vignere_decrypt_key_input"));
+    GtkEntry *vignere_decrypt_output = GTK_ENTRY(gtk_builder_get_object(builder, "vignere_decrypt_output"));
+
+    const char *input_text = gtk_entry_get_text(vignere_decrypt_input);
+    const char *key_text = gtk_entry_get_text(vignere_decrypt_key);
+
+    char *output_text = vigenereDecrypt(input_text, key_text);
+
+    gtk_entry_set_text(vignere_decrypt_output, output_text);
+}
+
+void on_xor_encrypt_input_changed(){
+    GtkEntry *xor_encrypt_input = GTK_ENTRY(gtk_builder_get_object(builder, "xor_encrypt_text_input"));
+    GtkEntry *xor_encrypt_key = GTK_ENTRY(gtk_builder_get_object(builder, "xor_encrypt_key_input"));
+    GtkEntry *xor_encrypt_output = GTK_ENTRY(gtk_builder_get_object(builder, "xor_encrypt_output"));
+
+    const char *input_text = gtk_entry_get_text(xor_encrypt_input);
+    const char *key_text = gtk_entry_get_text(xor_encrypt_key);
+
+    char *output_text = xorcipher(input_text, key_text[0]);
+
+    gtk_entry_set_text(xor_encrypt_output, output_text);
+}
+
+void on_xor_decrypt_input_changed(){
+    GtkEntry *xor_decrypt_input = GTK_ENTRY(gtk_builder_get_object(builder, "xor_decrypt_text_input"));
+    GtkEntry *xor_decrypt_key = GTK_ENTRY(gtk_builder_get_object(builder, "xor_decrypt_key_input"));
+    GtkEntry *xor_decrypt_output = GTK_ENTRY(gtk_builder_get_object(builder, "xor_decrypt_output"));
+
+    const char *input_text = gtk_entry_get_text(xor_decrypt_input);
+    const char *key_text = gtk_entry_get_text(xor_decrypt_key);
+
+    char *output_text = xorcipher(input_text, key_text[0]);
+
+    gtk_entry_set_text(xor_decrypt_output, output_text);
+}
 
 
 void on_cc_input_changed() {
@@ -96,6 +156,114 @@ void on_cc_input_changed() {
         free(output_text);
     }
     g_free(option); 
+}
+
+void on_railfence_encrypt_input_changed(){
+    GtkEntry *railfence_encrypt_input = GTK_ENTRY(gtk_builder_get_object(builder, "railfence_encrypt_text_input"));
+    GtkEntry *railfence_encrypt_key = GTK_ENTRY(gtk_builder_get_object(builder, "railfence_encrypt_key_input"));
+    GtkEntry *railfence_encrypt_output = GTK_ENTRY(gtk_builder_get_object(builder, "railfence_encrypt_output"));
+
+    const char *input_text = gtk_entry_get_text(railfence_encrypt_input);
+    const char *key_text = gtk_entry_get_text(railfence_encrypt_key);
+    int key = atoi(key_text); // Convert key_text to an integer
+
+    char *output_text = railFenceEncrypt(input_text, key); // Call the correct function
+
+    if (output_text) {
+        gtk_entry_set_text(railfence_encrypt_output, output_text);
+        free(output_text); // Free the dynamically allocated output_text
+    } else {
+        gtk_entry_set_text(railfence_encrypt_output, "Error: Invalid input or key");
+    }
+}
+
+void on_railfence_decrypt_input_changed(){
+    GtkEntry *railfence_decrypt_input = GTK_ENTRY(gtk_builder_get_object(builder, "railfence_decrypt_text_input"));
+    GtkEntry *railfence_decrypt_key = GTK_ENTRY(gtk_builder_get_object(builder, "railfence_decrypt_key_input"));
+    GtkEntry *railfence_decrypt_output = GTK_ENTRY(gtk_builder_get_object(builder, "railfence_decrypt_output"));
+
+    const char *input_text = gtk_entry_get_text(railfence_decrypt_input);
+    const char *key_text = gtk_entry_get_text(railfence_decrypt_key);
+    int key = atoi(key_text); // Convert key_text to an integer
+
+    char *output_text = railFenceDecrypt(input_text, key); // Correctly call railFenceEncrypt
+
+    if (output_text) {
+        gtk_entry_set_text(railfence_decrypt_output, output_text);
+        free(output_text); // Free the dynamically allocated output_text
+    } else {
+        // Handle error or invalid input
+        gtk_entry_set_text(railfence_decrypt_output, "Error: Invalid input or key");
+    }
+}
+
+void on_random_password_button_clicked(){
+    // get the value from GtkSpinButton with id random_password_input and convert to integer
+    GtkSpinButton *random_password_input = GTK_SPIN_BUTTON(gtk_builder_get_object(builder, "random_password_input"));
+    int length = gtk_spin_button_get_value_as_int(random_password_input);
+
+    char *password = randomPass(length);
+
+    GtkEntry *random_password_output = GTK_ENTRY(gtk_builder_get_object(builder, "random_password_output"));
+    gtk_entry_set_text(random_password_output, password);
+}
+
+void on_dtor_input_changed(){
+    GtkEntry *dtor_input = GTK_ENTRY(gtk_builder_get_object(builder, "dtor_input"));
+    GtkEntry *dtor_output = GTK_ENTRY(gtk_builder_get_object(builder, "dtor_output"));
+
+    const char *input_text = gtk_entry_get_text(dtor_input);
+
+    // Convert input_text to an integer and call decimalToRoman
+    int input = atoi(input_text);
+
+    char *output_text = decimalToRoman(input);
+
+    gtk_entry_set_text(dtor_output, output_text);
+}
+
+void on_rtod_input_changed(){
+    GtkEntry *rtod_input = GTK_ENTRY(gtk_builder_get_object(builder, "rtod_input"));
+    GtkEntry *rtod_output = GTK_ENTRY(gtk_builder_get_object(builder, "rtod_output"));
+
+    const char *input_text = gtk_entry_get_text(rtod_input);
+
+    // Call romanToDecimal
+    long int output = romanToDecimal(input_text);
+
+    char output_text[100];
+    sprintf(output_text, "%ld", output);
+
+    gtk_entry_set_text(rtod_output, output_text);
+}
+
+void on_btog_input_changed(){
+    GtkEntry *btog_input = GTK_ENTRY(gtk_builder_get_object(builder, "btog_input"));
+    GtkEntry *btog_output = GTK_ENTRY(gtk_builder_get_object(builder, "btog_output"));
+
+    const char *input_text = gtk_entry_get_text(btog_input);
+
+    unsigned long long int input = strtoull(input_text, NULL, 10);
+
+    unsigned long long int output = binaryToGrayCode(input);
+
+    char output_text[100];
+
+    sprintf(output_text, "%llu", output);
+
+    gtk_entry_set_text(btog_output, output_text);
+}
+
+void on_gtob_input_changed(){
+    // Gray to binary
+    GtkEntry *gtob_input = GTK_ENTRY(gtk_builder_get_object(builder, "gtob_input"));
+    GtkEntry *gtob_output = GTK_ENTRY(gtk_builder_get_object(builder, "gtob_output"));
+
+    const char *input_text = gtk_entry_get_text(gtob_input);
+
+    char *output_text = grayToBinary(input_text);
+
+    gtk_entry_set_text(gtob_output, output_text);
 }
 
 

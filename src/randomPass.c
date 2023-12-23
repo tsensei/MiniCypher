@@ -10,11 +10,6 @@ char *randomPass(int length) {
         return NULL;
     }
 
-    char lower[] = "abcdefghijklmnopqrstuvwxyz";
-    char upper[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    char digit[] = "0123456789";
-    char special[] = "!@#$%^&*()_+-=]};:,.<>?";
-
     // seeding the rand() with current time
     srand((unsigned)time(NULL));
 

@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 char *vigenereDecrypt(const char *text, const char *key) {
-    if (text == NULL || key == NULL) {
+    if (text == NULL || key == NULL || key[0] == '\0') {
         return NULL;
     }
 
@@ -17,10 +18,14 @@ char *vigenereDecrypt(const char *text, const char *key) {
     }
 
     for (int i = 0; i < cipherLen; i++) {
-        int ci = text[i] - 'A';
-        int ki = key[i % keyLen] - 'A';
-        char pi = (ci - ki + 26) % 26 + 'A';
-        decrypted[i] = pi;
+        if (isalpha(text[i]) && isalpha(key[i % keyLen])) {
+            int ci = toupper(text[i]) - 'A';
+            int ki = toupper(key[i % keyLen]) - 'A';
+            char pi = (ci - ki + 26) % 26 + 'A';
+            decrypted[i] = pi;
+        } else {
+            decrypted[i] = text[i];
+        }
     }
     decrypted[cipherLen] = '\0';
 
