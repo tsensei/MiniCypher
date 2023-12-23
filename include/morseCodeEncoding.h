@@ -1,8 +1,7 @@
-#ifndef MORSECODEENCODING_H
-#define MORSECODEENCODING_H
-#include<stdio.h>
-#include<string.h>
+#ifndef MORSE_CODE_ENCODING_H
+#define MORSE_CODE_ENCODING_H
 
-char *morseCodeEncoding(char *input);
+char *asciiToMorse(const char *input);
+char *morseToAscii(const char *input);
 
-#endif
+#endif // MORSE_CODE_ENCODING_H

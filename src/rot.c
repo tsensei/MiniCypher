@@ -1,8 +1,8 @@
-#include "../include/rot13.h"
+#include "../include/rot.h"
 #include <string.h>
 #include <stdlib.h>
 
-char *rot(const char *string) {
+char *rot(const char *string, int key) {
     if (string == NULL) {
         return NULL;
     }
@@ -14,16 +14,19 @@ char *rot(const char *string) {
         return NULL; // Memory allocation failed
     }
 
+    // Ensure the key is within 0-25
+    key = key % 26;
+
     for (int i = 0; string[i] != '\0'; i++) {
         transformed[i] = string[i];
-        if ((transformed[i] >= 'a' && transformed[i] <= 'z') || (transformed[i] >= 'A' && transformed[i] <= 'Z')) {
-            if ((transformed[i] >= 'a' && transformed[i] <= 'm') || (transformed[i] >= 'A' && transformed[i] <= 'M')) {
-                transformed[i] += 13;
-            } else {
-                transformed[i] -= 13;
-            }
+
+        if (transformed[i] >= 'a' && transformed[i] <= 'z') {
+            transformed[i] = ((transformed[i] - 'a' + key) % 26) + 'a';
+        } else if (transformed[i] >= 'A' && transformed[i] <= 'Z') {
+            transformed[i] = ((transformed[i] - 'A' + key) % 26) + 'A';
         }
     }
+
     transformed[length] = '\0'; // Null-terminate the string
 
     return transformed;

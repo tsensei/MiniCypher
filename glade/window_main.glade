@@ -544,17 +544,179 @@ For example, the string "AAAABBBCCDAA" would be encoded as "4A3B2C1D2A" in RLE.
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">center</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Morse Code</property>
+                    <property name="label" translatable="yes">Morse Code Conversion</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 24"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="margin-top">30</property>
+                    <property name="margin-bottom">30</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">10</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-bottom">8</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">ASCII to Morse</property>
+                            <attributes>
+                              <attribute name="font-desc" value="Sans 16"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="atom_ascii_input">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="width-chars">40</property>
+                            <property name="placeholder-text" translatable="yes">Text Input</property>
+                            <property name="input-purpose">alpha</property>
+                            <signal name="changed" handler="on_atom_ascii_input_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="shadow-type">in</property>
+                            <child>
+                              <object class="GtkTextView" id="atom_morse_output">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="margin-right">120</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="margin-bottom">4</property>
+                            <property name="label" translatable="yes">Morse to ASCII</property>
+                            <attributes>
+                              <attribute name="font-desc" value="Sans 16"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="mtoa_morse_input">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="placeholder-text" translatable="yes">Morse Input</property>
+                            <property name="input-purpose">alpha</property>
+                            <signal name="changed" handler="on_mtoa_morse_input_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="shadow-type">in</property>
+                            <child>
+                              <object class="GtkTextView" id="mtoa_ascii_output">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">The Morse Code is a language that people use to communicate with each other,
+ through telegraph, radio, satellite, or with light.
+ The language is a series of short and long bursts that are heard or seen.
+
+Example: 'SOS' converts to '... --- ...' in Morse code.
+Example: '... --- ...' converts back to 'SOS' in ASCII.</property>
+                    <property name="justify">center</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
@@ -576,17 +738,105 @@ For example, the string "AAAABBBCCDAA" would be encoded as "4A3B2C1D2A" in RLE.
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">center</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">ROT13</property>
+                    <property name="label" translatable="yes">ROT</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 24"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="margin-top">30</property>
+                    <property name="margin-bottom">30</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">7</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="spacing">4</property>
+                        <child>
+                          <object class="GtkEntry" id="rot_text_input">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="width-chars">40</property>
+                            <property name="placeholder-text" translatable="yes">Input </property>
+                            <signal name="changed" handler="on_rot_input_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="rot_key_input">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="placeholder-text" translatable="yes">Keys to rotate (in num)</property>
+                            <property name="input-purpose">number</property>
+                            <signal name="changed" handler="on_rot_input_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="rot_output">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="halign">center</property>
+                        <property name="width-chars">40</property>
+                        <property name="placeholder-text" translatable="yes">Rotated output</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Given a input string and a integer as a key, this function rotates the string
+to as many places defined by the key</property>
+                    <property name="justify">center</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
@@ -598,7 +848,7 @@ For example, the string "AAAABBBCCDAA" would be encoded as "4A3B2C1D2A" in RLE.
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">ROT13</property>
+                <property name="label" translatable="yes">ROT</property>
                 <attributes>
                   <attribute name="weight" value="semibold"/>
                 </attributes>

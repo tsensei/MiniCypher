@@ -1,11 +1,12 @@
 #include <gtk/gtk.h>
-#include "rot13.h"
+#include "rot.h"
 #include "asciiToBase64.h"
 #include "baseConverter.h"
 #include "analyzeText.h"
 #include "reverseString.h"
 #include "runLengthEncoding.h"
 #include "caseConversion.h"
+#include "morseCodeEncoding.h"
 
 GtkBuilder *builder;
 
@@ -32,16 +33,7 @@ void on_textanalyzer_file_set(){
     free(result);
 }
 
-void on_rle_input_changed(){
-    GtkEntry *rle_input = GTK_ENTRY(gtk_builder_get_object(builder, "rle_input"));
-    GtkTextView *rle_output = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "rle_output"));
 
-    char *input_text = gtk_entry_get_text(rle_input);
-    char *output_text = runLengthEncoding(input_text);
-
-    GtkTextBuffer *buffer = gtk_text_view_get_buffer(rle_output);
-    gtk_text_buffer_set_text(buffer, output_text, -1);
-}
 
 void on_cc_input_changed() {
     GtkEntry *cc_input = GTK_ENTRY(gtk_builder_get_object(builder, "cc_input"));
@@ -82,6 +74,64 @@ void on_reversed_input_change(){
     }
 
     gtk_entry_set_text(reversed_output, output_text);
+}
+
+void on_rle_input_changed(){
+    GtkEntry *rle_input = GTK_ENTRY(gtk_builder_get_object(builder, "rle_input"));
+    GtkTextView *rle_output = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "rle_output"));
+
+    char *input_text = gtk_entry_get_text(rle_input);
+    char *output_text = runLengthEncoding(input_text);
+
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(rle_output);
+    gtk_text_buffer_set_text(buffer, output_text, -1);
+}
+
+void on_atom_ascii_input_changed(){
+    GtkEntry *ascii_input = GTK_ENTRY(gtk_builder_get_object(builder, "atom_ascii_input"));
+    GtkTextView *morse_output = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "atom_morse_output"));
+
+
+    char *input_text = gtk_entry_get_text(ascii_input);
+    char *output_text = asciiToMorse(input_text);
+
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(morse_output);
+    gtk_text_buffer_set_text(buffer, output_text, -1);
+}
+
+void on_mtoa_morse_input_changed(){
+    GtkEntry *morse_input = GTK_ENTRY(gtk_builder_get_object(builder, "mtoa_morse_input"));
+    GtkTextView *ascii_output = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "mtoa_ascii_output"));
+
+    char *input_text = gtk_entry_get_text(morse_input);
+    char *output_text = morseToAscii(input_text);
+
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(ascii_output);
+    gtk_text_buffer_set_text(buffer, output_text, -1);
+}
+
+void on_rot_input_changed(){
+    GtkEntry *rot_input = GTK_ENTRY(gtk_builder_get_object(builder, "rot_text_input"));
+    GtkEntry *rot_key = GTK_ENTRY(gtk_builder_get_object(builder, "rot_key_input"));
+    GtkEntry *rot_output = GTK_ENTRY(gtk_builder_get_object(builder, "rot_output"));
+
+    const char *input_text = gtk_entry_get_text(rot_input);
+    const char *key_text = gtk_entry_get_text(rot_key);
+
+    int key = 0;
+    char *endptr;
+
+    key = strtol(key_text, &endptr, 10);
+
+    if (key_text == endptr || *endptr != '\0') {
+        gtk_entry_set_text(rot_output, "Error: Key must be a number");
+        return;
+    }
+
+    char *output_text = rot(input_text, key);
+
+    gtk_entry_set_text(rot_output, output_text);
+
 }
 
 int main(int argc, char *argv[])

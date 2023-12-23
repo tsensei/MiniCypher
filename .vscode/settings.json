@@ -1,6 +1,7 @@
 {
   "files.associations": {
     "gtk.h": "c",
-    "graytobinary.h": "c"
+    "graytobinary.h": "c",
+    "runlengthencoding.h": "c"
   }
 }
