@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
-  <object class="GtkFileFilter" id="filefilter1"/>
   <object class="GtkWindow" id="window_main">
     <property name="can-focus">False</property>
     <property name="window-position">center</property>
@@ -235,8 +234,9 @@ It also outputs a approximate reading time for the text content.</property>
                     <child>
                       <object class="GtkEntry" id="palindrome_output">
                         <property name="visible">True</property>
-                        <property name="can-focus">True</property>
+                        <property name="can-focus">False</property>
                         <property name="halign">center</property>
+                        <property name="editable">False</property>
                         <property name="width-chars">40</property>
                         <property name="placeholder-text" translatable="yes">Is it a palindrome ?</property>
                       </object>
@@ -738,12 +738,16 @@ Example: '... --- ...' converts back to 'SOS' in ASCII.</property>
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">center</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">ROT</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 24"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -755,6 +759,8 @@ Example: '... --- ...' converts back to 'SOS' in ASCII.</property>
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="margin-top">30</property>
+                    <property name="margin-bottom">30</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">7</property>
                     <child>
@@ -823,7 +829,9 @@ Example: '... --- ...' converts back to 'SOS' in ASCII.</property>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Information</property>
+                    <property name="label" translatable="yes">Given a input string and a integer as a key, this function rotates the string
+to as many places defined by the key</property>
+                    <property name="justify">center</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -854,17 +862,162 @@ Example: '... --- ...' converts back to 'SOS' in ASCII.</property>
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">center</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">URL Processing</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 24"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="margin-top">30</property>
+                    <property name="margin-bottom">30</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">20</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">URL Encode</property>
+                            <attributes>
+                              <attribute name="font-desc" value="Sans 16"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="url_encode_input">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="width-chars">60</property>
+                            <property name="placeholder-text" translatable="yes">Input Decoded URL</property>
+                            <signal name="changed" handler="on_url_encode_input_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="url_encode_output">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="editable">False</property>
+                            <property name="placeholder-text" translatable="yes">Output Encoded URL</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">URL Decode</property>
+                            <attributes>
+                              <attribute name="font-desc" value="Sans 16"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="url_decode_input">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="placeholder-text" translatable="yes">Input Encoded URL</property>
+                            <signal name="changed" handler="on_url_decode_input_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="url_decode_output">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="editable">False</property>
+                            <property name="placeholder-text" translatable="yes">Output Decoded URL</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">URL encoding converts characters into a format that can be transmitted over the Internet.
+URLs can only be sent over the Internet using the ASCII character-set.
+Since URLs often contain characters outside the ASCII set, the URL has to be converted into a valid ASCII format.
+URL encoding replaces unsafe ASCII characters with a "%" followed by two hexadecimal digits.</property>
+                    <property name="justify">center</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
@@ -887,40 +1040,10 @@ Example: '... --- ...' converts back to 'SOS' in ASCII.</property>
               </packing>
             </child>
             <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Base64 Encoding</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="position">3</property>
-              </packing>
+              <placeholder/>
             </child>
             <child type="tab">
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Base64 Encoding</property>
-                <attributes>
-                  <attribute name="weight" value="semibold"/>
-                </attributes>
-              </object>
-              <packing>
-                <property name="position">3</property>
-                <property name="tab-fill">False</property>
-              </packing>
+              <placeholder/>
             </child>
             <child>
               <placeholder/>
@@ -1120,17 +1243,191 @@ Example: '... --- ...' converts back to 'SOS' in ASCII.</property>
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Base Conversion</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 22"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="margin-top">30</property>
+                    <property name="margin-bottom">30</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">20</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">center</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">From Base :  </property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxText" id="base_conversion_combo_input">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="active">0</property>
+                                <items>
+                                  <item translatable="yes">decimal</item>
+                                  <item translatable="yes">binary</item>
+                                  <item translatable="yes">octal</item>
+                                  <item translatable="yes">hexadecimal</item>
+                                </items>
+                                <signal name="changed" handler="on_base_conversion_input_changed" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="base_conversion_text_input">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="width-chars">40</property>
+                            <property name="placeholder-text" translatable="yes">Input Number</property>
+                            <signal name="changed" handler="on_base_conversion_input_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">center</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">To Base :  </property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxText" id="base_conversion_combo_output">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="active">0</property>
+                                <items>
+                                  <item translatable="yes">decimal</item>
+                                  <item translatable="yes">binary</item>
+                                  <item translatable="yes">octal</item>
+                                  <item translatable="yes">hexadecimal</item>
+                                </items>
+                                <signal name="changed" handler="on_base_conversion_input_changed" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="base_conversion_text_output">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="editable">False</property>
+                            <property name="width-chars">40</property>
+                            <property name="placeholder-text" translatable="yes">Output Number</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">This utility inter-converts among the most 4 used bases :
+Decimal, Binary, Hexadecimal &amp; Octal</property>
+                    <property name="justify">center</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
