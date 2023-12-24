@@ -11,18 +11,23 @@ char *vigenereEncrypt(const char *plaintext, const char *keyword) {
 
     int plainLen = strlen(plaintext);
     int keyLen = strlen(keyword);
-    char *encrypted = malloc(plainLen + 1); // +1 for null terminator
+    char *encrypted = malloc(plainLen + 1); 
 
     if (!encrypted) {
-        return NULL; // Memory allocation failed
+        return NULL;
     }
 
     for (int i = 0; i < plainLen; i++) {
         if (isalpha(plaintext[i]) && isalpha(keyword[i % keyLen])) {
-            int pi = toupper(plaintext[i]) - 'A';
+            int pi = isupper(plaintext[i]) ? plaintext[i] - 'A' : plaintext[i] - 'a';
             int ki = toupper(keyword[i % keyLen]) - 'A';
-            char ci = (pi + ki) % 26 + 'A';
-            encrypted[i] = ci;
+            int ci = (pi + ki) % 26;
+
+            if (isupper(plaintext[i])) {
+                encrypted[i] = ci + 'A';
+            } else {
+                encrypted[i] = ci + 'a';
+            }
         } else {
             encrypted[i] = plaintext[i];
         }

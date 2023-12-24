@@ -118,7 +118,7 @@ const char *morseEncode(char x)
     case '@':
         return ".--.-.";
     default:
-        return "?"; // This will now be used only for truly invalid or unsupported characters
+        return "?"; 
     }
 }
 
@@ -311,7 +311,7 @@ char *morseToAscii(const char *input) {
         return NULL;
     }
 
-    int maxAsciiLength = strlen(inputCopy) / 5;
+    int maxAsciiLength = strlen(inputCopy);
     char *asciiStr = malloc(maxAsciiLength + 1);
     if (asciiStr == NULL) {
         fprintf(stderr, "Memory allocation failed for asciiStr\n");

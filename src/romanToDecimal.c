@@ -46,7 +46,7 @@ int getDecimal(char ch)
 
 long int romanToDecimal(const char* romanNum) {
     if (romanNum == NULL) {
-        return -1; // Or handle error as appropriate
+        return -1; 
     }
 
     int i = 0;
@@ -55,8 +55,7 @@ long int romanToDecimal(const char* romanNum) {
     while (romanNum[i]) {
         if ((strlen(romanNum) - i) > 2) {
             if (getDecimal(romanNum[i]) < getDecimal(romanNum[i + 2])) {
-                // Handle invalid Roman numeral
-                return -1; // Or your preferred method of indicating an error
+                return -1; 
             }
         }
 

@@ -8,10 +8,10 @@ char *xorcipher(const char *str, char key) {
     }
 
     int len = strlen(str);
-    char *ciphered = malloc(len + 1); // +1 for null terminator
+    char *ciphered = malloc(len + 1);
 
     if (!ciphered) {
-        return NULL; // Memory allocation failed
+        return NULL;
     }
 
     for (int i = 0; i < len; i++) {

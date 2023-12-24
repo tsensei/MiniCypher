@@ -8,10 +8,10 @@ char *rot(const char *string, int key) {
     }
 
     int length = strlen(string);
-    char *transformed = malloc(length + 1); // +1 for null terminator
+    char *transformed = malloc(length + 1); 
 
     if (transformed == NULL) {
-        return NULL; // Memory allocation failed
+        return NULL; 
     }
 
     // Ensure the key is within 0-25
@@ -27,7 +27,7 @@ char *rot(const char *string, int key) {
         }
     }
 
-    transformed[length] = '\0'; // Null-terminate the string
+    transformed[length] = '\0'; 
 
     return transformed;
 }

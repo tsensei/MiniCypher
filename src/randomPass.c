@@ -10,10 +10,8 @@ char *randomPass(int length) {
         return NULL;
     }
 
-    // seeding the rand() with current time
     srand((unsigned)time(NULL));
 
-    // Allocate memory for the password
     char *password = malloc(length + 1); // +1 for null terminator
     if (!password) {
         fprintf(stderr, "Memory allocation failed\n");
@@ -27,7 +25,7 @@ char *randomPass(int length) {
         int index = rand() % strlen(allChars); // random index
         password[i] = allChars[index];
     }
-    password[length] = '\0'; // Null-terminate the password
+    password[length] = '\0'; 
 
     return password;
 }

@@ -3,28 +3,28 @@
 #include "../include/railFence.h"
 
 char *railFenceEncrypt(const char *text, int key) {
-    if (text == NULL) return NULL; // Check for NULL pointer
-    if (key <= 0) return NULL; // Invalid key value
+    if (text == NULL) return NULL; 
+    if (key <= 0) return NULL; 
 
     int textlen = strlen(text);
     char **railmatrix = (char **)malloc(key * sizeof(char *));
-    char *result = (char *)malloc(textlen + 1); // +1 for null terminator
+    char *result = (char *)malloc(textlen + 1); 
 
     if (!railmatrix || !result) {
         free(railmatrix);
         free(result);
-        return NULL; // Memory allocation failed
+        return NULL; 
     }
 
     for (int i = 0; i < key; i++) {
         railmatrix[i] = (char *)malloc(textlen * sizeof(char));
-        if (!railmatrix[i]) { // Memory allocation check for each row
+        if (!railmatrix[i]) { 
             for (int j = 0; j < i; j++) free(railmatrix[j]);
             free(railmatrix);
             free(result);
             return NULL;
         }
-        memset(railmatrix[i], '\n', textlen); // Initialize to '\n'
+        memset(railmatrix[i], '\n', textlen); 
     }
 
     int k = -1, row = 0, col = 0, idx = 0;
@@ -41,34 +41,34 @@ char *railFenceEncrypt(const char *text, int key) {
         free(railmatrix[i]); // Freeing each row after use
     }
 
-    free(railmatrix); // Freeing the array of pointers
-    result[idx] = '\0'; // Null-terminate the string
+    free(railmatrix); 
+    result[idx] = '\0';
     return result;
 }
 
 char *railFenceDecrypt(const char *text, int key) {
-    if (text == NULL) return NULL; // Check for NULL pointer
+    if (text == NULL) return NULL; 
     if (key <= 0) return NULL; // Invalid key value
 
     int textlen = strlen(text);
     char **railmatrix = (char **)malloc(key * sizeof(char *));
-    char *result = (char *)malloc(textlen + 1); // +1 for null terminator
+    char *result = (char *)malloc(textlen + 1); 
 
     if (!railmatrix || !result) {
         free(railmatrix);
         free(result);
-        return NULL; // Memory allocation failed
+        return NULL;
     }
 
     for (int i = 0; i < key; i++) {
         railmatrix[i] = (char *)malloc(textlen * sizeof(char));
-        if (!railmatrix[i]) { // Memory allocation check for each row
+        if (!railmatrix[i]) { 
             for (int j = 0; j < i; j++) free(railmatrix[j]);
             free(railmatrix);
             free(result);
             return NULL;
         }
-        memset(railmatrix[i], '\n', textlen); // Initialize to '\n'
+        memset(railmatrix[i], '\n', textlen);
     }
 
     int k = -1, row = 0, col = 0, index = 0, idx = 0;
@@ -91,9 +91,9 @@ char *railFenceDecrypt(const char *text, int key) {
         row += k;
     }
 
-    for (int i = 0; i < key; i++) free(railmatrix[i]); // Freeing each row
-    free(railmatrix); // Freeing the array of pointers
+    for (int i = 0; i < key; i++) free(railmatrix[i]);
+    free(railmatrix); 
 
-    result[idx] = '\0'; // Null-terminate the string
+    result[idx] = '\0';
     return result;
 }

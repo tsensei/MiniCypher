@@ -11,18 +11,23 @@ char *vigenereDecrypt(const char *text, const char *key) {
 
     int cipherLen = strlen(text);
     int keyLen = strlen(key);
-    char *decrypted = malloc(cipherLen + 1); // +1 for null terminator
+    char *decrypted = malloc(cipherLen + 1); 
 
     if (!decrypted) {
-        return NULL; // Memory allocation failed
+        return NULL; 
     }
 
     for (int i = 0; i < cipherLen; i++) {
         if (isalpha(text[i]) && isalpha(key[i % keyLen])) {
-            int ci = toupper(text[i]) - 'A';
+            int ci = isupper(text[i]) ? text[i] - 'A' : text[i] - 'a';
             int ki = toupper(key[i % keyLen]) - 'A';
-            char pi = (ci - ki + 26) % 26 + 'A';
-            decrypted[i] = pi;
+            int pi = (ci - ki + 26) % 26;
+
+            if (isupper(text[i])) {
+                decrypted[i] = pi + 'A';
+            } else {
+                decrypted[i] = pi + 'a';
+            }
         } else {
             decrypted[i] = text[i];
         }

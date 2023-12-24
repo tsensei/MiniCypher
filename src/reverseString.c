@@ -8,16 +8,16 @@ char *reverse(const char *string) {
     }
 
     int length = strlen(string);
-    char *reversed = malloc(length + 1); // +1 for null terminator
+    char *reversed = malloc(length + 1); 
 
     if (reversed == NULL) {
-        return NULL; // Memory allocation failed
+        return NULL;
     }
 
     for (int i = 0; i < length; i++) {
         reversed[i] = string[length - 1 - i];
     }
-    reversed[length] = '\0'; // Null-terminate the string
+    reversed[length] = '\0';
 
     return reversed;
 }

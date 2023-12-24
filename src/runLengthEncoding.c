@@ -9,10 +9,10 @@ char *runLengthEncoding(const char *input) {
     }
 
     int length = strlen(input);
-    // Allocate enough memory (worst case: 2 characters for each input character)
+
     char *encoded = malloc(2 * length + 1);
     if (!encoded) {
-        return NULL; // Memory allocation failed
+        return NULL; 
     }
 
     int count, idx = 0;
@@ -23,11 +23,10 @@ char *runLengthEncoding(const char *input) {
             i++;
         }
 
-        // Write count and character to the encoded string
         int numChars = sprintf(encoded + idx, "%d%c", count, input[i]);
         idx += numChars;
     }
-    encoded[idx] = '\0'; // Null-terminate the string
+    encoded[idx] = '\0';
 
     return encoded;
 }

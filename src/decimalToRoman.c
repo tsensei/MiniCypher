@@ -4,7 +4,7 @@
 #include <string.h>
 
 char* decimalToRoman(int num){
-    char* RomanNum = malloc(256 * sizeof(char)); // Allocate memory for the Roman numeral string
+    char* RomanNum = malloc(256 * sizeof(char));
     int i = 0;
 
     if (RomanNum == NULL) {
@@ -111,6 +111,6 @@ char* decimalToRoman(int num){
         }
     }
 
-    RomanNum[i] = '\0'; // Null-terminate the string
+    RomanNum[i] = '\0';  
     return RomanNum;
 }

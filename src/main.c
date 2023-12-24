@@ -54,13 +54,11 @@ void on_base_conversion_input_changed(){
     gtk_entry_set_text(base_conversion_output, output_text);
 
     // free(input_text);
-
     // if (output_text != input_text) { 
     //     free(output_text);
     // }
-
-    // g_free(from); 
-    // g_free(to); 
+    // g_free(from);
+    // g_free(to);
 }
 
 void on_textanalyzer_file_set(){
@@ -96,7 +94,13 @@ void on_vignere_encrypt_input_changed(){
 
     char *output_text = vigenereEncrypt(input_text, key_text);
 
-    gtk_entry_set_text(vignere_encrypt_output, output_text);
+    // if output text is not null, then set text
+    if (output_text) {
+        gtk_entry_set_text(vignere_encrypt_output, output_text);
+        free(output_text);
+    } else {
+        gtk_entry_set_text(vignere_encrypt_output, "Error: Invalid input or key");
+    }
 }
 
 void on_vignere_decrypt_input_changed(){
@@ -109,7 +113,13 @@ void on_vignere_decrypt_input_changed(){
 
     char *output_text = vigenereDecrypt(input_text, key_text);
 
-    gtk_entry_set_text(vignere_decrypt_output, output_text);
+    // if output text is not null, then set text
+    if (output_text) {
+        gtk_entry_set_text(vignere_decrypt_output, output_text);
+        free(output_text);
+    } else {
+        gtk_entry_set_text(vignere_decrypt_output, "Error: Invalid input or key");
+    }
 }
 
 void on_xor_encrypt_input_changed(){
@@ -166,13 +176,13 @@ void on_railfence_encrypt_input_changed(){
 
     const char *input_text = gtk_entry_get_text(railfence_encrypt_input);
     const char *key_text = gtk_entry_get_text(railfence_encrypt_key);
-    int key = atoi(key_text); // Convert key_text to an integer
+    int key = atoi(key_text); 
 
-    char *output_text = railFenceEncrypt(input_text, key); // Call the correct function
+    char *output_text = railFenceEncrypt(input_text, key); 
 
     if (output_text) {
         gtk_entry_set_text(railfence_encrypt_output, output_text);
-        free(output_text); // Free the dynamically allocated output_text
+        free(output_text); 
     } else {
         gtk_entry_set_text(railfence_encrypt_output, "Error: Invalid input or key");
     }
@@ -185,21 +195,20 @@ void on_railfence_decrypt_input_changed(){
 
     const char *input_text = gtk_entry_get_text(railfence_decrypt_input);
     const char *key_text = gtk_entry_get_text(railfence_decrypt_key);
-    int key = atoi(key_text); // Convert key_text to an integer
+    int key = atoi(key_text);
 
-    char *output_text = railFenceDecrypt(input_text, key); // Correctly call railFenceEncrypt
+    char *output_text = railFenceDecrypt(input_text, key);
 
     if (output_text) {
         gtk_entry_set_text(railfence_decrypt_output, output_text);
-        free(output_text); // Free the dynamically allocated output_text
+        free(output_text);
     } else {
-        // Handle error or invalid input
+
         gtk_entry_set_text(railfence_decrypt_output, "Error: Invalid input or key");
     }
 }
 
 void on_random_password_button_clicked(){
-    // get the value from GtkSpinButton with id random_password_input and convert to integer
     GtkSpinButton *random_password_input = GTK_SPIN_BUTTON(gtk_builder_get_object(builder, "random_password_input"));
     int length = gtk_spin_button_get_value_as_int(random_password_input);
 
@@ -215,7 +224,6 @@ void on_dtor_input_changed(){
 
     const char *input_text = gtk_entry_get_text(dtor_input);
 
-    // Convert input_text to an integer and call decimalToRoman
     int input = atoi(input_text);
 
     char *output_text = decimalToRoman(input);
@@ -229,7 +237,6 @@ void on_rtod_input_changed(){
 
     const char *input_text = gtk_entry_get_text(rtod_input);
 
-    // Call romanToDecimal
     long int output = romanToDecimal(input_text);
 
     char output_text[100];
@@ -256,7 +263,6 @@ void on_btog_input_changed(){
 }
 
 void on_gtob_input_changed(){
-    // Gray to binary
     GtkEntry *gtob_input = GTK_ENTRY(gtk_builder_get_object(builder, "gtob_input"));
     GtkEntry *gtob_output = GTK_ENTRY(gtk_builder_get_object(builder, "gtob_output"));
 
@@ -303,24 +309,31 @@ void on_atom_ascii_input_changed(){
     GtkEntry *ascii_input = GTK_ENTRY(gtk_builder_get_object(builder, "atom_ascii_input"));
     GtkTextView *morse_output = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "atom_morse_output"));
 
-
-    char *input_text = gtk_entry_get_text(ascii_input);
+    const char *input_text = gtk_entry_get_text(ascii_input);
     char *output_text = asciiToMorse(input_text);
 
-    GtkTextBuffer *buffer = gtk_text_view_get_buffer(morse_output);
-    gtk_text_buffer_set_text(buffer, output_text, -1);
+    if (output_text != NULL) {
+        GtkTextBuffer *buffer = gtk_text_view_get_buffer(morse_output);
+        gtk_text_buffer_set_text(buffer, output_text, -1);
+        free(output_text); 
+    }
 }
+
 
 void on_mtoa_morse_input_changed(){
     GtkEntry *morse_input = GTK_ENTRY(gtk_builder_get_object(builder, "mtoa_morse_input"));
     GtkTextView *ascii_output = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "mtoa_ascii_output"));
 
-    char *input_text = gtk_entry_get_text(morse_input);
+    const char *input_text = gtk_entry_get_text(morse_input);
     char *output_text = morseToAscii(input_text);
 
-    GtkTextBuffer *buffer = gtk_text_view_get_buffer(ascii_output);
-    gtk_text_buffer_set_text(buffer, output_text, -1);
+    if (output_text != NULL) {
+        GtkTextBuffer *buffer = gtk_text_view_get_buffer(ascii_output);
+        gtk_text_buffer_set_text(buffer, output_text, -1);
+        free(output_text);
+    }
 }
+
 
 void on_rot_input_changed(){
     GtkEntry *rot_input = GTK_ENTRY(gtk_builder_get_object(builder, "rot_text_input"));
@@ -367,7 +380,6 @@ void on_url_decode_input_changed(){
 }
 
 void on_bitwise_input_changed(){
-    // get the bitwise_first_input, bitwise_second_input and convert it int
     GtkEntry *bitwise_first_input = GTK_ENTRY(gtk_builder_get_object(builder, "bitwise_first_input"));
     GtkEntry *bitwise_second_input = GTK_ENTRY(gtk_builder_get_object(builder, "bitwise_second_input"));
 
