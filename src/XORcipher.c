@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 char *xorcipher(const char *str, char key) {
-    if (str == NULL) {
+    if (str == NULL || key == NULL) {
         return NULL;
     }
 

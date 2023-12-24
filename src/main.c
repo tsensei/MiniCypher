@@ -132,7 +132,12 @@ void on_xor_encrypt_input_changed(){
 
     char *output_text = xorcipher(input_text, key_text[0]);
 
-    gtk_entry_set_text(xor_encrypt_output, output_text);
+    if (output_text) {
+        gtk_entry_set_text(xor_encrypt_output, output_text);
+        free(output_text);
+    } else {
+        gtk_entry_set_text(xor_encrypt_output, "Error: Invalid input or key");
+    }
 }
 
 void on_xor_decrypt_input_changed(){
@@ -145,7 +150,12 @@ void on_xor_decrypt_input_changed(){
 
     char *output_text = xorcipher(input_text, key_text[0]);
 
-    gtk_entry_set_text(xor_decrypt_output, output_text);
+    if (output_text) {
+        gtk_entry_set_text(xor_decrypt_output, output_text);
+        free(output_text);
+    } else {
+        gtk_entry_set_text(xor_decrypt_output, "Error: Invalid input or key");
+    }
 }
 
 

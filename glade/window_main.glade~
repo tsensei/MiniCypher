@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <object class="GtkAdjustment" id="adjustment1">
@@ -1863,7 +1863,7 @@ in analogy to a fence built with horizontal rails.</property>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">This utility does this</property>
+                    <property name="label" translatable="yes">This utility generates random password of the choosen length</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2113,7 +2113,6 @@ Decimal, Binary, Hexadecimal &amp; Octal</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Base Conversion</property>
                 <attributes>
-                  <attribute name="font-desc" value="Sans 9"/>
                   <attribute name="weight" value="semibold"/>
                 </attributes>
               </object>
