@@ -1,7 +1,7 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
 # Set the name and the supported language of the project
 PROJECT(MiniCypher C)
 # Set the minimum version of cmake required to build this project
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
 
 # Use the package PkgConfig to detect GTK+ headers/library files
 FIND_PACKAGE(PkgConfig REQUIRED)
