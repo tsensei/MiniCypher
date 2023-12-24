@@ -305,25 +305,32 @@ char *morseToAscii(const char *input) {
         return NULL;
     }
 
-    int maxAsciiLength = strlen(input) / 5; 
-    char *asciiStr = malloc(maxAsciiLength + 1); 
-    if (asciiStr == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
+    char *inputCopy = strdup(input);
+    if (inputCopy == NULL) {
+        fprintf(stderr, "Memory allocation failed for input copy\n");
         return NULL;
     }
-    
-    asciiStr[0] = '\0'; 
-    char *token = strtok((char *)input, " "); 
+
+    int maxAsciiLength = strlen(inputCopy) / 5;
+    char *asciiStr = malloc(maxAsciiLength + 1);
+    if (asciiStr == NULL) {
+        fprintf(stderr, "Memory allocation failed for asciiStr\n");
+        free(inputCopy);
+        return NULL;
+    }
+
+    asciiStr[0] = '\0';
+    char *token = strtok(inputCopy, " ");
     while (token != NULL) {
-        char asciiChar = morseDecode(token); 
+        char asciiChar = morseDecode(token);
         if (asciiChar == '?') {
-            // Append an error message instead of the invalid character
             strcat(asciiStr, "[error: invalid Morse sequence]");
         } else {
             strncat(asciiStr, &asciiChar, 1);
         }
-        token = strtok(NULL, " "); 
+        token = strtok(NULL, " ");
     }
 
+    free(inputCopy);
     return asciiStr;
 }

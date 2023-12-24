@@ -16,7 +16,8 @@
 #include "romanToDecimal.h"
 #include "decimalToRoman.h"
 #include "binaryToGrayCode.h"
-#include "grayToBinary.h" 
+#include "grayToBinary.h"
+#include "bitwiseAND_OR_NOT.h"
 
 
 GtkBuilder *builder;
@@ -363,6 +364,40 @@ void on_url_decode_input_changed(){
     char *output_text = urlDecode(input_text);
 
     gtk_entry_set_text(url_decode_output, output_text);
+}
+
+void on_bitwise_input_changed(){
+    // get the bitwise_first_input, bitwise_second_input and convert it int
+    GtkEntry *bitwise_first_input = GTK_ENTRY(gtk_builder_get_object(builder, "bitwise_first_input"));
+    GtkEntry *bitwise_second_input = GTK_ENTRY(gtk_builder_get_object(builder, "bitwise_second_input"));
+
+    const char *first_input_text = gtk_entry_get_text(bitwise_first_input);
+    const char *second_input_text = gtk_entry_get_text(bitwise_second_input);
+
+    int first_input = atoi(first_input_text);
+    int second_input = atoi(second_input_text);
+
+    int and_result = bitwiseAND(first_input, second_input);
+    int or_result = bitwiseOR(first_input, second_input);
+    int not_result = bitwiseNOT(first_input);
+
+    char and_result_text[100];
+    char or_result_text[100];
+    char not_result_text[100];
+
+    sprintf(and_result_text, "%d", and_result);
+    sprintf(or_result_text, "%d", or_result);
+    sprintf(not_result_text, "%d", not_result);
+
+    GtkEntry *bitwise_and_output = GTK_ENTRY(gtk_builder_get_object(builder, "bitwise_and_output"));
+    GtkEntry *bitwise_or_output = GTK_ENTRY(gtk_builder_get_object(builder, "bitwise_or_output"));
+    GtkEntry *bitwise_not_output = GTK_ENTRY(gtk_builder_get_object(builder, "bitwise_not_output"));
+
+    gtk_entry_set_text(bitwise_and_output, and_result_text);
+    gtk_entry_set_text(bitwise_or_output, or_result_text);
+    gtk_entry_set_text(bitwise_not_output, not_result_text);
+
+
 }
 
 int main(int argc, char *argv[])
